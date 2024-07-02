@@ -5,11 +5,12 @@ import { CustomRoute, RouterInterface } from '../../utils/router_component';
 class Home extends Component<RouterInterface> {
   state: Readonly<{
     grid: Array<any>;
+    history: Array<any>;
   }>;
   constructor(props: RouterInterface) {
     super(props);
     this.state = {
-      grid: [
+      history: [
         {
           title: 'Tabung Masuk',
           category: 'Oksigen',
@@ -17,9 +18,51 @@ class Home extends Component<RouterInterface> {
           id: 1,
         },
         {
-          title: 'Tabung Masuk',
+          title: 'Tabung Keluar',
           category: 'Oksigen',
+          count: 5,
+          id: 2,
+        },
+        {
+          title: 'Tabung Masuk',
+          category: 'Acetylenen',
+          count: 14,
+          id: 3,
+        },
+        {
+          title: 'Tabung Keluar',
+          category: 'Acetylenen',
+          count: 7,
+          id: 4,
+        },
+        {
+          title: 'Tabung Masuk',
+          category: 'Butanol',
+          count: 8,
+          id: 5,
+        },
+        {
+          title: 'Tabung Keluar',
+          category: 'Butanol',
+          count: 3,
+          id: 6,
+        },
+      ],
+      grid: [
+        {
+          title: 'Stok Tabung Oksigen',
           count: 20,
+          backgroundColor: '#FFF6E9',
+          titleColor: '#FC4100',
+          subtitleColor: '#000',
+          id: 1,
+        },
+        {
+          title: 'Stok Tabung Acetylenen',
+          count: 14,
+          backgroundColor: '#FC4100',
+          titleColor: '#FFF6E9',
+          subtitleColor: '#fff',
           id: 2,
         },
       ],
@@ -34,22 +77,30 @@ class Home extends Component<RouterInterface> {
             paddingHorizontal: 15,
           }}
         >
-          <Text
+          <View
             style={{
-              fontSize: 25,
-              marginBottom: 30,
+              marginBottom: 20,
               marginTop: 15,
-              fontWeight: 700,
-              color: '#FC4100',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
             }}
           >
-            Home Screen
-          </Text>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 700,
+                color: 'black',
+              }}
+            >
+              {'Prio Dwi Sembodo'}
+            </Text>
+          </View>
           <FlatList
             nestedScrollEnabled
             scrollEnabled={false}
             numColumns={2}
-            columnWrapperStyle={{ gap: 16 }}
+            contentContainerStyle={{ gap: 10 }}
+            columnWrapperStyle={{ gap: 10 }}
             data={this.state.grid}
             keyExtractor={(item) => item.title}
             renderItem={({ item }) => (
@@ -58,14 +109,75 @@ class Home extends Component<RouterInterface> {
                   borderRadius: 8,
                   padding: 15,
                   flex: 1,
-                  backgroundColor: item.id == 1 ? 'yellow' : 'green',
+                  backgroundColor: item.backgroundColor,
                 }}
               >
-                <Text style={{ color: 'red' }}>{item.title}</Text>
+                <Text style={{ color: item.titleColor, fontWeight: 700, fontSize: 17 }}>
+                  {item.title}
+                </Text>
+                <Text style={{ color: item.subtitleColor, fontSize: 11 }}>
+                  Stok yang tersedia di Gudang
+                </Text>
+                <View
+                  style={{
+                    marginTop: 5,
+                    flexDirection: 'row',
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: item.titleColor,
+                      fontSize: 30,
+                      fontWeight: 700,
+                    }}
+                  >
+                    {item.count}
+                  </Text>
+                  <Text
+                    style={{
+                      color: item.subtitleColor,
+                      fontSize: 14,
+                      marginTop: 'auto',
+                      marginBottom: 'auto',
+                      marginLeft: 5,
+                    }}
+                  >
+                    (Unit)
+                  </Text>
+                </View>
               </View>
             )}
           />
-          <Text style={{ fontSize: 25, marginBottom: 10, color: 'red' }}>Home Screen</Text>
+          <Text
+            style={{
+              fontSize: 16,
+              marginTop: 20,
+              marginBottom: 12,
+              color: '#010101',
+              fontWeight: 600,
+            }}
+          >
+            Aktivitas Pelayanan Tabung
+          </Text>
+          <FlatList
+            nestedScrollEnabled
+            scrollEnabled={false}
+            contentContainerStyle={{ gap: 10 }}
+            data={this.state.history}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  borderRadius: 8,
+                  flex: 1,
+                }}
+              >
+                <Text style={{ color: item.title, fontWeight: 700, fontSize: 17 }}>
+                  {item.title}
+                </Text>
+              </View>
+            )}
+          />
         </ScrollView>
         <Pressable
           onPress={() => this.props.navigasi.navigate('Form')}
