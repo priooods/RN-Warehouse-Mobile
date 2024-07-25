@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { FlatList, Image, Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { CustomRoute, RouterInterface } from '../../utils/router_component';
+import { Camera } from 'react-native-vision-camera';
 
 class Home extends Component<RouterInterface> {
   state: Readonly<{
@@ -67,6 +68,12 @@ class Home extends Component<RouterInterface> {
         },
       ],
     };
+  }
+  async componentDidMount() {
+    const permission = Camera.getCameraPermissionStatus();
+    if (permission == 'granted') {
+      await Camera.requestCameraPermission();
+    }
   }
   render() {
     return (
@@ -187,7 +194,7 @@ class Home extends Component<RouterInterface> {
             justifyContent: 'center',
             width: 65,
             bottom: 40,
-            backgroundColor: '#0F67B1',
+            backgroundColor: '#FC4100',
             right: 25,
             height: 65,
             borderRadius: 100,
